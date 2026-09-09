@@ -1,0 +1,14 @@
+# Run coturn on a VPS with a public IP. Replace every CHANGE_ME value.
+listening-port=3478
+listening-ip=0.0.0.0
+external-ip=CHANGE_ME_TO_THE_VPS_PUBLIC_IP
+fingerprint
+use-auth-secret
+static-auth-secret=CHANGE_ME_TO_A_LONG_RANDOM_SECRET
+realm=CHANGE_ME_TO_YOUR_DOMAIN_OR_PUBLIC_IP
+min-port=49152
+max-port=49200
+no-loopback-peers
+no-multicast-peers
+stale-nonce
+log-file=stdout
