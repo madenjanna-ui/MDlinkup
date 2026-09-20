@@ -1,4 +1,4 @@
-const CACHE = "mdlinkup-shell-v1-0";
+const CACHE = "mdlinkup-shell-v1-1";
 const SHELL = [
   "./js/usability.js?v=24.0",
   "./css/usability.css?v=24.0",
@@ -6,10 +6,10 @@ const SHELL = [
   "./index.html",
   "./manifest.json",
   "./css/style.css?v=21.3",
-  "./js/config.js?v=3",
+  "./js/config.js?v=4",
   "./js/api.js?v=23.2",
   "./js/auth.js?v=11",
-  "./js/app.js?v=23.2",
+  "./js/app.js?v=23.3",
   "./js/media.js?v=3",
   "./assets/icon-180.png",
   "./assets/icon-512.png",

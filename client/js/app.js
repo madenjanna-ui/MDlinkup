@@ -68,7 +68,7 @@ const App = {
             const scope = new URL("./", document.baseURI).pathname;
             await navigator.serviceWorker.register(swUrl.href, {scope});
             this.notificationRegistration = await navigator.serviceWorker.ready;
-            console.log("🔔 Family Service Worker READY:", this.notificationRegistration.scope);
+            console.log("🔔 MD LinkUp Service Worker READY:", this.notificationRegistration.scope);
             return this.notificationRegistration;
         } catch(e) {
             this.notificationRegistration = null;
@@ -216,7 +216,7 @@ const App = {
 
     sidebarHtml() {
         const u=Auth.currentUser || {};
-        return `<div class="nova-drawer-backdrop" onclick="App.closeSidebar()"><aside class="nova-drawer" onclick="event.stopPropagation()"><div class="nova-drawer-profile">${this.avatarHtml(u,64)}<div><b>${this.esc(u.name||"MD LinkUp")}</b><small>@${this.esc(u.login||"")}</small></div><button onclick="App.closeSidebar()">×</button></div><nav class="nova-drawer-nav"><button onclick="App.closeSidebar();App.showHome()"><span>💬</span><div><b>Все чаты</b><small>Личные и групповые диалоги</small></div></button><button onclick="App.closeSidebar();App.openUsers()"><span>👥</span><div><b>Контакты</b><small>Люди в MD LinkUp</small></div></button><button onclick="App.closeSidebar();App.createGroup()"><span>◉</span><div><b>Новая группа</b><small>Создать общий разговор</small></div></button><button onclick="App.closeSidebar();App.toast('⭐ Избранное','Отмеченные сообщения уже сохраняются. Отдельный экран добавим следующим шагом')"><span>⭐</span><div><b>Избранное</b><small>Важные сообщения</small></div></button><div class="nova-drawer-sep"></div><button onclick="App.closeSidebar();App.openProfile()"><span>♙</span><div><b>Профиль</b><small>Имя, аватар и оформление</small></div></button><button onclick="App.closeSidebar();App.openSettings()"><span>⚙︎</span><div><b>Настройки</b><small>Управление приложением</small></div></button>${Auth.isAdmin()?`<button onclick="App.closeSidebar();App.openAdmin()"><span>⌘</span><div><b>Пользователи</b><small>Управление аккаунтами</small></div></button>`:""}</nav><div class="nova-drawer-footer"><span>MD LinkUp</span><small>будь на связи</small></div></aside></div>`;
+        return `<div class="nova-drawer-backdrop" onclick="App.closeSidebar()"><aside class="nova-drawer" onclick="event.stopPropagation()"><div class="drawer-brand"><img src="assets/icon-180.png" alt=""><span>MD LinkUp</span></div><div class="nova-drawer-profile">${this.avatarHtml(u,68)}<div><b>${this.esc(u.name||"MD LinkUp")}</b><small><i class="drawer-online"></i> в сети · @${this.esc(u.login||"")}</small></div><button onclick="App.closeSidebar()" aria-label="Закрыть">×</button></div><nav class="nova-drawer-nav"><button onclick="App.closeSidebar();App.showHome()"><span>💬</span><div><b>Все чаты</b><small>Личные и групповые диалоги</small></div></button><button onclick="App.closeSidebar();App.openUsers()"><span>👥</span><div><b>Контакты</b><small>Люди в MD LinkUp</small></div></button><button onclick="App.closeSidebar();App.createGroup()"><span>◉</span><div><b>Новая группа</b><small>Создать общий разговор</small></div></button><button onclick="App.closeSidebar();App.toast('⭐ Избранное','Отмеченные сообщения уже сохраняются. Отдельный экран добавим следующим шагом')"><span>⭐</span><div><b>Избранное</b><small>Важные сообщения</small></div></button><div class="nova-drawer-sep"></div><button onclick="App.closeSidebar();App.openProfile()"><span>♙</span><div><b>Профиль</b><small>Имя, аватар и оформление</small></div></button><button onclick="App.closeSidebar();App.openSettings()"><span>⚙︎</span><div><b>Настройки</b><small>Управление приложением</small></div></button>${Auth.isAdmin()?`<button onclick="App.closeSidebar();App.openAdmin()"><span>⌘</span><div><b>Пользователи</b><small>Управление аккаунтами</small></div></button>`:""}</nav><div class="nova-drawer-footer"><span>MD LinkUp</span><small>будь на связи</small></div></aside></div>`;
     },
     openSidebar(){ document.querySelectorAll('.nova-drawer-backdrop').forEach(x=>x.remove()); document.body.insertAdjacentHTML('beforeend',this.sidebarHtml()); requestAnimationFrame(()=>document.querySelector('.nova-drawer-backdrop')?.classList.add('open')); },
     closeSidebar(){ const el=document.querySelector('.nova-drawer-backdrop'); if(!el)return; el.classList.remove('open'); setTimeout(()=>el.remove(),180); },
@@ -246,7 +246,6 @@ const App = {
             <button onclick="App.quickChoose('message')"><span>💬</span><div><b>Новое сообщение</b><small>Начать личный разговор</small></div><i>›</i></button>
             <button onclick="App.quickChoose('group')"><span>👥</span><div><b>Создать группу</b><small>Выбрать участников</small></div><i>›</i></button>
             <button onclick="App.quickChoose('audioCall')"><span>📞</span><div><b>Голосовой звонок</b><small>Позвонить пользователю</small></div><i>›</i></button>
-            <button onclick="App.quickChoose('videoCall')"><span>🎥</span><div><b>Видеозвонок</b><small>Позвонить с камерой</small></div><i>›</i></button>
             <button onclick="App.quickChoose('photo')"><span>📷</span><div><b>Фото</b><small>Отправить фотографию</small></div><i>›</i></button>
             <button onclick="App.quickChoose('video')"><span>🎬</span><div><b>Видео</b><small>Отправить видеозапись</small></div><i>›</i></button>
             <button onclick="App.quickChoose('voice')"><span>🎙️</span><div><b>Голосовое</b><small>Записать голосовое сообщение</small></div><i>›</i></button>
@@ -326,7 +325,7 @@ const App = {
         <div class="profile-card"><div id="profileAvatar">${this.avatarHtml(u,92)}</div><div><h2>${this.esc(u.name)}</h2><small>@${this.esc(u.login)}</small></div></div>
         <div class="card form"><label class="field-label">Имя</label><input id="profileName" value="${this.attr(u.name)}"><label class="field-label">Аватар</label><input id="avatarFile" type="file" accept="image/*" onchange="App.previewAvatar(event)"><div class="avatar-actions"><button class="secondary" onclick="App.removeAvatar()">Удалить аватар</button><button class="primary" onclick="App.saveProfile()">Сохранить</button></div></div>
         <div class="card settings-card"><div><b>🔔 Уведомления</b><small id="pushStatus">Проверка…</small></div><div style="display:flex;gap:8px"><button class="secondary" onclick="App.testNotification()">Проверить</button><button class="primary" onclick="App.enableNotifications()">Включить</button></div></div>
-        <div class="card settings-card"><div><b>📞 Микрофон и камера</b><small id="callPermissionStatus">Разрешите доступ, чтобы принимать звонки</small></div><button class="primary" onclick="App.checkCallPermissions()">Проверить доступ</button></div>
+        <div class="card settings-card call-info-card"><div><b>📞 Звонки</b><small>Нажмите 📞 в личном чате. Доступ к микрофону запрашивается автоматически при первом звонке.</small></div><span class="settings-ok">Готово</span></div>
         <div class="card settings-card"><div><b>🔊 Звуки MD LinkUp</b><small>Звук при новых сообщениях и действиях</small></div><button class="secondary" onclick="App.toggleSound()">${localStorage.getItem("FamilySound")==="off"?"Включить":"Выключить"}</button></div>
         <div class="card appearance-card"><div class="appearance-head"><div><b>🎨 Оформление</b><small>Выбери оформление MD LinkUp</small></div><span class="appearance-current">${themeNames[this.appearanceTheme]}</span></div>
           <div class="theme-grid">
@@ -411,7 +410,7 @@ const App = {
             this.notificationRegistration = reg;
             if(!reg) throw new Error("Service Worker не запустился.");
             const key=await API.pushPublicKey();
-            if(!key) throw new Error("Сервер не вернул ключ push. Обновите server.js на Family v6.2.");
+            if(!key) throw new Error("Сервер не вернул ключ push. Обновите server.js MD LinkUp.");
           let subscription =
     await reg.pushManager.getSubscription();
 
@@ -571,7 +570,7 @@ await API.pushSubscribe(subscription.toJSON());
         const cache=this._chatMessageCache ||= new Map();
         const cachedMessages=cache.get(chatKey);
         this._lastMessages=cachedMessages || [];
-        app.innerHTML=`<div class="page chat-page"><div class="header chat-header"><button onclick="App.showHome()">←</button>${this.avatarHtml(target,38)}<h1>${this.esc(target.name)}</h1><div class="chat-header-actions"><button onclick="App.startCall(${otherId},false,false)">📞</button><button onclick="App.startCall(${otherId},true,false)">🎥</button></div></div><div class="messages" id="privateMessages">${cachedMessages ? cachedMessages.map(m=>this.messageHtml(m,false,otherId)).join("") : `<div class="chat-loading">Загрузка сообщений…</div>`}</div>${this.chatFooter("private",otherId,"Напишите сообщение...")}${this.bottomNav("chat","chat")}</div>`;
+        app.innerHTML=`<div class="page chat-page"><div class="header chat-header"><button onclick="App.showHome()">←</button>${this.avatarHtml(target,38)}<h1>${this.esc(target.name)}</h1><div class="chat-header-actions"><button class="one-tap-call" title="Позвонить" onclick="App.startCall(${otherId},false,false)">📞</button></div></div><div class="messages" id="privateMessages">${cachedMessages ? cachedMessages.map(m=>this.messageHtml(m,false,otherId)).join("") : `<div class="chat-loading">Загрузка сообщений…</div>`}</div>${this.chatFooter("private",otherId,"Напишите сообщение...")}${this.bottomNav("chat","chat")}</div>`;
         this.scrollMessages("privateMessages",true);
         this.bindChatInput("privateInput",()=>this.sendPrivate(otherId));
         this.hydrateLocalAudio("privateMessages");
@@ -829,8 +828,8 @@ await API.pushSubscribe(subscription.toJSON());
     showCallOverlay(state,name,video){
         document.querySelectorAll(".call-overlay").forEach(x=>x.remove());
         const el=document.createElement("div");el.className="call-overlay";
-        const activeControls=`<button id="callMicButton" onclick="App.toggleCallMicrophone()">🎙️ Микрофон</button>${video?`<button id="callCameraButton" onclick="App.toggleCallCamera()">📷 Камера</button>`:""}<button onclick="App.selectCallSpeaker()">🔊 Динамик</button><button class="call-end" onclick="App.endCall(true)">✕ Завершить</button>`;
-        el.innerHTML=`<div class="call-window ${video?"video-call":"audio-call"}"><video id="callRemote" class="call-remote" autoplay playsinline></video><div class="call-shade"></div><div class="call-top"><b>${this.esc(name||"Семья")}</b><span>${state==="incoming"?"Входящий звонок":state==="calling"?"Вызов…":"Подключение…"}</span></div><video id="callLocal" class="call-local" autoplay muted playsinline></video><div class="call-controls">${state==="incoming"?`<button class="call-accept" onclick="App.acceptIncomingCall()">📞 Принять</button><button class="call-decline" onclick="App.declineIncomingCall()">✕ Отклонить</button>`:activeControls}</div></div>`;
+        const activeControls=`<button id="callMicButton" class="call-round" onclick="App.toggleCallMicrophone()"><span>🎙️</span><small>Микрофон</small></button><button class="call-round" onclick="App.selectCallSpeaker()"><span>🔊</span><small>Динамик</small></button><button class="call-round call-end" onclick="App.endCall(true)"><span>✕</span><small>Завершить</small></button>`;
+        el.innerHTML=`<div class="call-window ${video?"video-call":"audio-call"}"><video id="callRemote" class="call-remote" autoplay playsinline></video><div class="call-shade"></div><div class="call-brand"><img src="assets/icon-180.png" alt=""><span>MD LinkUp</span></div><div class="call-person">${this.avatarHtml({name:name||"",gender:"male"},108)}<b>${this.esc(name||"MD LinkUp")}</b><span>${state==="incoming"?"Входящий аудиозвонок":state==="calling"?"Звоним…":"Соединяем…"}</span></div><div class="call-top"><b>${this.esc(name||"MD LinkUp")}</b><span>${state==="incoming"?"Входящий звонок":state==="calling"?"Вызов…":"Подключение…"}</span></div><video id="callLocal" class="call-local" autoplay muted playsinline></video><div class="call-controls">${state==="incoming"?`<button class="call-round call-accept" onclick="App.acceptIncomingCall()"><span>📞</span><small>Принять</small></button><button class="call-round call-decline" onclick="App.declineIncomingCall()"><span>✕</span><small>Отклонить</small></button>`:activeControls}</div></div>`;
         document.body.appendChild(el);const local=document.getElementById("callLocal");if(local&&this.callStream)local.srcObject=this.callStream;
         this.attachRemoteStream();
     },
@@ -845,7 +844,7 @@ await API.pushSubscribe(subscription.toJSON());
             return;
         }
         if(this.callPc||this.pendingIncomingCall){this.sendCallSignal({type:"call_end",to:Number(msg.from)});return;}
-        this.callTargetId=Number(msg.from);this.callTargetName=String(msg.fromName||"Семья");this.callVideo=!!msg.video;this.pendingIncomingCall=msg;this.incomingIceQueue=[];
+        this.callTargetId=Number(msg.from);this.callTargetName=String(msg.fromName||"MD LinkUp");this.callVideo=!!msg.video;this.pendingIncomingCall=msg;this.incomingIceQueue=[];
         this.cosmicSound("call");
         this.showCallOverlay("incoming",this.callTargetName,this.callVideo);
     },
@@ -1002,6 +1001,6 @@ setInterval(async()=>{
 },3000);
 
 App.start().catch(error => {
-    console.error("Family start error:", error);
-    app.innerHTML = `<main class="login cosmic-login"><div class="logo">⚠️</div><div class="title">Не удалось запустить Family</div><div class="subtitle">${App.esc(error?.message || "Проверьте подключение к серверу и обновите страницу")}</div><button class="primary" onclick="location.reload()">Обновить</button></main>`;
+    console.error("MD LinkUp start error:", error);
+    app.innerHTML = `<main class="login cosmic-login"><div class="logo">⚠️</div><div class="title">Не удалось запустить MD LinkUp</div><div class="subtitle">${App.esc(error?.message || "Проверьте подключение к серверу и обновите страницу")}</div><button class="primary" onclick="location.reload()">Обновить</button></main>`;
 });

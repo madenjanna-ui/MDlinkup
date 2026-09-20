@@ -1,9 +1,9 @@
 {
   "name": "MD LinkUp",
   "short_name": "LinkUp",
-  "id": "/family/",
-  "start_url": "/family/",
-  "scope": "/family/",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#0b1028",
@@ -20,7 +20,7 @@
       "src": "assets/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "maskable"
+      "purpose": "any maskable"
     }
   ]
 }

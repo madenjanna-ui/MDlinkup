@@ -2558,7 +2558,7 @@ wss.on(
                     sendToUserSockets(to,payload);
                     // A backgrounded PWA may keep a WebSocket open but cannot show the incoming-call UI.
                     // Push ensures the recipient still sees the call and can return to the app.
-                    void sendPushToUsers([to],{title:`📞 ${payload.fromName}`,body:payload.video?"Входящий видеозвонок":"Входящий звонок",url:"./",tag:`family-call-${userId}`,scope:"call",call:true});
+                    void sendPushToUsers([to],{title:`📞 ${payload.fromName}`,body:payload.video?"Входящий видеозвонок":"Входящий звонок",url:"./",tag:`md-linkup-call-${userId}`,scope:"call",call:true});
                     return;
                 }
 

@@ -70,9 +70,9 @@ const API = {
         const base = FAMILY_API_BASE || location.origin;
         const wsUrl = base.replace(/^http:/,"ws:").replace(/^https:/,"wss:") + `/ws?token=${encodeURIComponent(this.token)}`;
         const ws = new WebSocket(wsUrl);
-        ws.onopen = () => { this.ws = ws; console.log("🌌 Family WebSocket CONNECTED:", wsUrl); };
+        ws.onopen = () => { this.ws = ws; console.log("🌌 MD LinkUp WebSocket CONNECTED:", wsUrl); };
         ws.onmessage = e => { try { onMessage(JSON.parse(e.data)); } catch (err) { console.warn("WebSocket message error:", err); } };
-        ws.onerror = e => console.warn("🌌 Family WebSocket ERROR", e);
+        ws.onerror = e => console.warn("🌌 MD LinkUp WebSocket ERROR", e);
         ws.onclose = e => { if (this.ws === ws) this.ws = null; if (this.token) setTimeout(() => this.connectWS(onMessage), 2000); };
         this.ws = ws;
         return ws;
